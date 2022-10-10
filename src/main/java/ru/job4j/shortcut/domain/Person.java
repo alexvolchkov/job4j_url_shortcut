@@ -16,7 +16,7 @@ public class Person implements UserDetails {
 
     private String username;
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "person_role", joinColumns = {
             @JoinColumn(name = "person_id", nullable = false, updatable = false)},
     inverseJoinColumns = {

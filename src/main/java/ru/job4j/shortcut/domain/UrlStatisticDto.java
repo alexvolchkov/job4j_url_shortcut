@@ -1,11 +1,11 @@
 package ru.job4j.shortcut.domain;
 
-public class UrlStatisticDao {
+public class UrlStatisticDto {
     private String url;
     private long total;
 
-    public static UrlStatisticDao of(String url, long total) {
-        UrlStatisticDao urlStatisticDao = new UrlStatisticDao();
+    public static UrlStatisticDto of(String url, long total) {
+        UrlStatisticDto urlStatisticDao = new UrlStatisticDto();
         urlStatisticDao.url = url;
         urlStatisticDao.total = total;
         return urlStatisticDao;

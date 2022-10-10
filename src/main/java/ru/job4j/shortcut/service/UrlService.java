@@ -2,13 +2,16 @@ package ru.job4j.shortcut.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.shortcut.domain.Url;
+import ru.job4j.shortcut.domain.UrlStatisticDto;
 import ru.job4j.shortcut.repository.UrlRepository;
+import ru.job4j.shortcut.utilite.RandomGeneration;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UrlService {
-    private final String symbolUrl = "0123456789abcdefghijklmnopqrstuvwxyz";
     private final UrlRepository urls;
 
     public UrlService(UrlRepository urls) {
@@ -24,7 +27,7 @@ public class UrlService {
         String code;
         if (urlDB.isEmpty()) {
             urls.save(url);
-            code = convertUrl(url.getId());
+            code = RandomGeneration.convertUrl(url.getId());
             url.setCode(code);
             urls.save(url);
         } else {
@@ -33,17 +36,18 @@ public class UrlService {
         return code;
     }
 
-    private String convertUrl(int id) {
-        int base = symbolUrl.length();
-        StringBuilder rsl = new StringBuilder();
-        while (id > 0) {
-            rsl.append(symbolUrl.charAt(id % base));
-            id /= base;
-        }
-        return rsl.reverse().toString();
-    }
-
     public Optional<Url> findByCode(String code) {
         return urls.findByCode(code);
+    }
+
+    public List<UrlStatisticDto> statistic() {
+        List<UrlStatisticDto> rsl = new ArrayList<>();
+        rsl.add(UrlStatisticDto.of("URL", 0));
+        urls.findAll().forEach(el -> rsl.add(UrlStatisticDto.of(el.getUrl(), el.getCountStatistic())));
+        return rsl;
+    }
+
+    public void incrementCount(String code) {
+        urls.incrementCount(code);
     }
 }

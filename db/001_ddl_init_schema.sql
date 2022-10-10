@@ -17,12 +17,8 @@ create table if not exists person_role (
 create table if not exists url (
     id serial primary key not null,
     url text,
-    code text
+    code text,
+    count_statistic int
 );
 
-create table if not exists url_statistic (
-    id serial primary key not null,
-    url text,
-    date timestamp
-);
 

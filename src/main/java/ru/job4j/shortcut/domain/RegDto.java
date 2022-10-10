@@ -1,24 +1,24 @@
 package ru.job4j.shortcut.domain;
 
-public class RegDao {
+public class RegDto {
     private boolean reg;
     private String login;
     private String password;
 
-    public static RegDao of(boolean reg, String login, String password) {
-        RegDao regDao = new RegDao();
-        regDao.reg = reg;
-        regDao.login = login;
-        regDao.password = password;
-        return regDao;
+    public static RegDto of(boolean reg, String login, String password) {
+        RegDto regDTO = new RegDto();
+        regDTO.reg = reg;
+        regDTO.login = login;
+        regDTO.password = password;
+        return regDTO;
     }
 
-    public static RegDao of(boolean reg, String login) {
-        RegDao regDao = new RegDao();
-        regDao.reg = reg;
-        regDao.login = login;
-        regDao.password = "";
-        return regDao;
+    public static RegDto of(boolean reg, String login) {
+        RegDto regDTO = new RegDto();
+        regDTO.reg = reg;
+        regDTO.login = login;
+        regDTO.password = "";
+        return regDTO;
     }
 
     public boolean isReg() {

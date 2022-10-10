@@ -1,6 +1,6 @@
 package ru.job4j.shortcut.domain;
 
-public class SiteDao {
+public class SiteDto {
     private String site;
 
     public String getSite() {
