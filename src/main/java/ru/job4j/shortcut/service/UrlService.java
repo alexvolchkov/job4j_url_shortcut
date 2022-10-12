@@ -25,13 +25,16 @@ public class UrlService {
     public String convert(Url url) {
         Optional<Url> urlDB = findByUrl(url.getUrl());
         String code;
-        if (urlDB.isEmpty()) {
-            urls.save(url);
-            code = RandomGeneration.convertUrl(url.getId());
-            url.setCode(code);
-            urls.save(url);
+        if (urlDB.isPresent()) {
+            code = urlDB.get().getCode();
         } else {
-           code = urlDB.get().getCode();
+            synchronized (this) {
+                do {
+                    code = RandomGeneration.convertUrl();
+                } while (findByCode(code).isPresent());
+                url.setCode(code);
+                urls.save(url);
+            }
         }
         return code;
     }

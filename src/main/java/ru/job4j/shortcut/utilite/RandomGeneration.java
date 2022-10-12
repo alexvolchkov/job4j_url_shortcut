@@ -6,23 +6,22 @@ public class RandomGeneration {
     private static final String SYMBOL_PASSWORD = "0123456789-+%ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final String SYMBOL_URL = "0123456789abcdefghijklmnopqrstuvwxyz";
     private static final int LENGTH_PASSWORD = 7;
+    private static final int LENGTH_URL = 7;
 
-    public static String generatePassword() {
+    private static String randomGenerate(int length, String source) {
         Random rnd = new Random();
-        char[] text = new char[LENGTH_PASSWORD];
+        char[] text = new char[length];
         for (int i = 0; i < text.length; i++) {
-            text[i] = SYMBOL_PASSWORD.charAt(rnd.nextInt(SYMBOL_PASSWORD.length()));
+            text[i] = source.charAt(rnd.nextInt(source.length()));
         }
         return String.valueOf(text);
     }
 
-    public static String convertUrl(int id) {
-        int base = SYMBOL_URL.length();
-        StringBuilder rsl = new StringBuilder();
-        while (id > 0) {
-            rsl.append(SYMBOL_URL.charAt(id % base));
-            id /= base;
-        }
-        return rsl.reverse().toString();
+    public static String generatePassword() {
+        return randomGenerate(LENGTH_PASSWORD, SYMBOL_PASSWORD);
+    }
+
+    public static String convertUrl() {
+        return randomGenerate(LENGTH_URL, SYMBOL_URL);
     }
 }
