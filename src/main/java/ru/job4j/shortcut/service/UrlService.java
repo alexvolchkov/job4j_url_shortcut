@@ -6,6 +6,7 @@ import ru.job4j.shortcut.domain.UrlStatisticDto;
 import ru.job4j.shortcut.repository.UrlRepository;
 import ru.job4j.shortcut.utilite.RandomGeneration;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,19 +23,18 @@ public class UrlService {
         return urls.findByUrl(url);
     }
 
+    @Transactional
     public String convert(Url url) {
         Optional<Url> urlDB = findByUrl(url.getUrl());
         String code;
         if (urlDB.isPresent()) {
             code = urlDB.get().getCode();
         } else {
-            synchronized (this) {
                 do {
                     code = RandomGeneration.convertUrl();
                 } while (findByCode(code).isPresent());
                 url.setCode(code);
                 urls.save(url);
-            }
         }
         return code;
     }
